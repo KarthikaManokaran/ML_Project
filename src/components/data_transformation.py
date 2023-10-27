@@ -24,7 +24,7 @@ class DataTransformation:
 
     def get_data_transformer_object(self):
         '''
-        This function is responsible for data trnasformation
+        This function si responsible for data trnasformation
         
         '''
         try:
@@ -55,8 +55,8 @@ class DataTransformation:
 
             )
 
-            logging.info("Categorical columns encoding completed")
-            logging.info("Numerical columns standrd scaling completd")
+            logging.info(f"Categorical columns: {categorical_columns}")
+            logging.info(f"Numerical columns: {numerical_columns}")
 
             preprocessor=ColumnTransformer(
                 [
@@ -89,7 +89,7 @@ class DataTransformation:
             numerical_columns = ["writing_score", "reading_score"]
 
             input_feature_train_df=train_df.drop(columns=[target_column_name],axis=1)
-            target_feature_train_df_feature_train_df=train_df[target_column_name]
+            target_feature_train_df=train_df[target_column_name]
 
             input_feature_test_df=test_df.drop(columns=[target_column_name],axis=1)
             target_feature_test_df=test_df[target_column_name]
@@ -102,9 +102,9 @@ class DataTransformation:
             input_feature_test_arr=preprocessing_obj.transform(input_feature_test_df)
 
             train_arr = np.c_[
-                input_feature_train_arr, np.array(input_feature_train_df)
+                input_feature_train_arr, np.array(target_feature_train_df)
             ]
-            test_arr = np.c_[input_feature_test_arr, np.array(input_feature_train_df)]
+            test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
 
             logging.info(f"Saved preprocessing object.")
 
